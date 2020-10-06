@@ -11,7 +11,7 @@ import UserAvatarController from '@modules/users/infra/http/controllers/UserAvat
 
 const usersRouter = Router();
 
-const upload = multer(uploadConfig);
+const upload = multer(uploadConfig.multer);
 
 const usersController = new UsersController();
 const userAvatarController = new UserAvatarController();
