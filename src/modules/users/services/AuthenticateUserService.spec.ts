@@ -3,6 +3,8 @@ import AppError from '@shared/errors/AppError';
 
 import FakeUsersRepository from '@modules/users/repositories/fakes/FakeUsersRepository';
 import FakeHashProvider from '@modules/users/providers/HashProvider/fakes/FakeHashProvider';
+import FakeCacheProvider from '@shared/container/providers/CacheProvider/fakes/FakeCacheProvider';
+
 import CreateUserService from './CreateUserService';
 import AuthenticateUserService from './AuthenticateUserService';
 
@@ -10,18 +12,21 @@ let usersRepository: FakeUsersRepository
 let hashProvider: FakeHashProvider
 let createUser: CreateUserService
 let authenticateUser: AuthenticateUserService
+let cacheProvider: FakeCacheProvider
 
 describe('Authenticate User', () => {
   beforeEach(() => {
     usersRepository = new FakeUsersRepository();
     hashProvider = new FakeHashProvider();
-    createUser = new CreateUserService(usersRepository, hashProvider);
+    cacheProvider = new FakeCacheProvider();
+
+    createUser = new CreateUserService(usersRepository, hashProvider, cacheProvider);
     authenticateUser = new AuthenticateUserService(usersRepository, hashProvider)
   })
 
   it('should authenticate an user', async () => {
 
-    const user = await createUser.execute({
+    const user = await usersRepository.create({
       name: 'John Doe',
       email: 'john.doe@test.com',
       password: '123456'
