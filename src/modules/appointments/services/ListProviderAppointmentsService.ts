@@ -38,9 +38,6 @@ export default class ListProviderAppointmentsService {
       })
 
       await this.cacheProvider.save(cacheKey, appointments)
-
-      console.log('Query no banco!')
-
     }
     return appointments;
   }
